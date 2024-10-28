@@ -15,7 +15,7 @@
   }
 </script>
 
-<div class="encrypt-icon" bind:this={item} on:mousemove={handleMouse}>
+<div class="encrypt-icon" bind:this={item} on:mousemove={handleMouse} role="presentation">
   <Emoji content="locked" />
   <div class="id-container">
     <p>

@@ -33,6 +33,7 @@
 </script>
 
 <div
+  role="presentation"
   class="participantContainer"
   style:left={pos.left + "px"}
   style:top={pos.top + "px"}
@@ -68,7 +69,7 @@
   </div>
   {#key knowledge.length}
     {#if showKnowledge}
-      <div class="knowledges" in:fly={{ y: -100, duration: 500 }} out:fly={{ y: -50, duration: 350 }}>
+      <div class="knowledges" in:fly|global={{ y: -100, duration: 500 }} out:fly|global={{ y: -50, duration: 350 }}>
         {#if knowledge.length === 0}
           <p class="emptyText">Empty</p>
         {:else}

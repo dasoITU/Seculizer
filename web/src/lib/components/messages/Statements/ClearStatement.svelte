@@ -20,7 +20,7 @@
   });
 </script>
 
-<div class="statement" transition:fade style:top>
+<div class="statement" transition:fade|global style:top>
   <ActionBox title="clear"><Item emoji={icon} value={id} /></ActionBox>
 </div>
 

@@ -1,5 +1,4 @@
 <script lang="ts">
-  import type { Frame } from "$lib/models/Frame";
   import type { Navigation, NextFrameNavigation } from "src/types/app";
 
   export let navigation: Navigation = {

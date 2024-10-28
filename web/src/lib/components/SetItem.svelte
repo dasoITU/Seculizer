@@ -20,7 +20,7 @@
   }
 </script>
 
-<div transition:fade={{ delay: 250, duration: 300 }} class="item" bind:this={item} on:mousemove={handleMouse}>
+<div transition:fade|global={{ delay: 250, duration: 300 }} class="item" bind:this={item} on:mousemove={handleMouse} role="presentation">
   <Emoji content={emoji} />
   <p class="item-text">
     <span class="item-text-inner">
