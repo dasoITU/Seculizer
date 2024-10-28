@@ -14,7 +14,7 @@
   }
 </script>
 
-<div class="item" bind:this={item} on:mousemove={handleMouse}>
+<div class="item" bind:this={item} on:mousemove={handleMouse} role="presentation">
   <Emoji content={emoji} />
   <Format input={value} />
   <slot />

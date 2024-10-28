@@ -1,6 +1,7 @@
 <script lang="ts">
   export let input: string;
   import katex from "katex";
+  import "./Tex.css"
   let TexOutput: string = "";
   $: {
     if(input.startsWith("$")) input = input.slice(1);
@@ -13,11 +14,3 @@
 </script>
 
 {@html TexOutput}
-
-<style>
-  :global(.katex-display){
-    margin: 0rem .2rem;
-    font-size: inherit;
-    max-width: 100%;
-  }
-</style>

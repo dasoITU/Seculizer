@@ -18,7 +18,7 @@
   }
 </script>
 
-<div class="sign-icon" bind:this={item} on:mousemove={handleMouse}>
+<div class="sign-icon" bind:this={item} on:mousemove={handleMouse} role="presentation">
   <div class="emoji-container">
     <Emoji classes="pen" content="pen" />
     <span class="signie-emoji">

@@ -154,7 +154,7 @@ Protocol: {
   let dark = true;
 </script>
 
-<div class="editor-container" on:mousemove={mouseMove} class:loading={!loaded} class:dark>
+<div class="editor-container" on:mousemove={mouseMove} class:loading={!loaded} class:dark role="application">
   <textarea
     name="editor"
     class="editor"

@@ -107,7 +107,7 @@
 </script>
 
 <svelte:window on:resize={update} />
-<div class="line" bind:this={sendLine} in:receive={{key: JSON.stringify(child)}} out:send={{key: JSON.stringify(child)}}>
+<div class="line" bind:this={sendLine} in:receive|global={{key: JSON.stringify(child)}} out:send|global={{key: JSON.stringify(child)}}>
   {#if !child}
     <p>Invalid statement</p>
   {:else if child.type === "messageSendStatement"}

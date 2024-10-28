@@ -47,7 +47,7 @@
   const castToSetStatement = (x: ParticipantStatementNode) => x as SetStatement;
 </script>
 
-<div class="statement" transition:fade bind:this={statement}>
+<div class="statement" transition:fade|global bind:this={statement}>
   {#if !child}
     <p>Invalid participant statement</p>
   {:else if child.type === "newStatement"}
