@@ -10,18 +10,22 @@
   import Comment from "$lib/components/Comment.svelte";
     import { fade } from "svelte/transition";
 
-  export let stmnt: ParticipantStatement;
-  export let participantElements: ParticipantElements = {
+  interface Props {
+    stmnt: ParticipantStatement;
+    participantElements?: ParticipantElements;
+  }
+
+  let { stmnt, participantElements = {
     container: undefined,
     elements: {},
-  };
+  } }: Props = $props();
   const child = stmnt.child;
-  let statement: HTMLElement;
+  let statement = $state<HTMLElement | undefined>();
   function update() {
     let container = participantElements.container;
     let participant = participantElements.elements[stmnt.id.value];
 
-    if (participant) {
+    if (participant && statement) {
       let x = participant.offsetLeft + (container?.offsetLeft || 0) - statement.offsetWidth/2;
       let y = participant.offsetTop + (container?.offsetTop || 0) + participant.offsetHeight/2;
       statement.style.left = x + "px";
@@ -57,7 +61,11 @@
     <ActionBox title="new">
       {#if newStmnt.comment}
         <Item emoji={icon} value={value}>
-          <Comment comment={newStmnt.comment} slot="hover" />
+          {#snippet hover()}
+          {#if newStmnt.comment !== undefined}
+                        <Comment comment={newStmnt.comment}  />
+                        {/if}
+          {/snippet}
         </Item>
       {:else}
         <Item emoji={icon} value={value} />
@@ -68,7 +76,7 @@
     {@const id = setStmnt.id}
     {@const icon = $program.getIcon(id.value)}
     {@const value = setStmnt.value}
-    {@const comment = $currentFrame.getParticipantKnowledgeComment(stmnt.id.value, id)}
+    {@const comment = $currentFrame?.getParticipantKnowledgeComment(stmnt.id.value, id)}
     <ActionBox title="Update"><SetItem emoji={icon} value={id} newValue={value} {comment}/></ActionBox>
   {/if}
 </div>

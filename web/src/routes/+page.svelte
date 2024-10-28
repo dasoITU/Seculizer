@@ -5,10 +5,10 @@
   import LZString from "lz-string";
   import { goto } from "$app/navigation";
   import { Program } from "$lib/models/program";
-  import { program } from "$lib/stores/programStore.js";
-  let content = "";
-  let error: string | undefined = undefined;
-  let parsing = false;
+  import { program } from "$lib/stores/programStore";
+  let content = $state("");
+  let error: string | undefined = $state(undefined);
+  let parsing = $state(false);
   async function parseContent() {
     if(content.trim() === "") return;
     if(parsing) return;
@@ -34,7 +34,7 @@
   {/if}
   <FileUpload bind:content />
   <Editor bind:content />
-  <button disabled={content.trim() === "" || parsing} on:click={parseContent}>{parsing ? "Parsing..." : "Generate"}</button>
+  <button disabled={content.trim() === "" || parsing} onclick={parseContent}>{parsing ? "Parsing..." : "Generate"}</button>
 </div>
 
 <style>

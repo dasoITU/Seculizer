@@ -1,21 +1,22 @@
 <script lang="ts">
   import { getEmoji } from "$lib/utils/EmojiUtil";
 
-  export let content: string = "red-question-mark";
-  export let classes = "";
-  let omaEmoji: { type: "background"; value: string } | { type: "class"; value: string } = {
-    type: "class",
-    value: "red-question-mark",
-  };
+  interface Props {
+    content?: string;
+    classes?: string;
+  }
 
-  $: omaEmoji = getEmoji(content);
+  let { content = "red-question-mark", classes = "" }: Props = $props();
+  let omaEmoji = $derived<{
+    type: "class" | "background";
+    value: string;
+  }>(getEmoji(content));
 </script>
 
 <div class="emoji {classes}">
   {#if omaEmoji.type === "class"}
-    <i class="oma oma-{omaEmoji.value}" />
+    <i class="oma oma-{omaEmoji.value}"></i>
   {:else if omaEmoji.type === "background"}
-    <i class="oma" style="background-image: url({omaEmoji.value})" />
+    <i class="oma" style="background-image: url({omaEmoji.value})"></i>
   {/if}
 </div>
-

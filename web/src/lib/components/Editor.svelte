@@ -1,4 +1,5 @@
 <script lang="ts">
+
   /*
 Participants: a;
 Protocol: {
@@ -9,9 +10,13 @@ Protocol: {
   import { Program } from "$lib/models/program";
   import MagicString from "magic-string";
   import { onMount } from "svelte";
-  export let content: string = "";
-  let hightlighted = content;
-  let loaded = false;
+  interface Props {
+    content?: string;
+  }
+
+  let { content = $bindable("") }: Props = $props();
+  let hightlighted = $state(content);
+  let loaded = $state(false);
   type TokenType = {
     name: string;
     pattern: RegExp;
@@ -31,9 +36,9 @@ Protocol: {
     tokenTypeIdx: number;
     tokenType: TokenType;
   };
-  let tokens: Token[] = [];
+  let tokens: Token[] = $state([]);
 
-  $: {
+  $effect(() => {
     if (content !== "" && content) {
       tokens = SepoLexer.tokenize(content + " eof").tokens;
       let tmp = new MagicString(content);
@@ -77,10 +82,11 @@ Protocol: {
     } else {
       hightlighted = `<span class="line">1</span>`;
     }
-  }
-  let preElement: HTMLPreElement;
+  });
+  let preElement = $state<HTMLPreElement>();
 
   function updateScroll(event: UIEvent & { currentTarget: EventTarget & HTMLTextAreaElement }): any {
+    if (!preElement) return;
     const { scrollTop, scrollLeft } = event.currentTarget;
     preElement.scrollTop = scrollTop;
     preElement.scrollLeft = scrollLeft;
@@ -151,16 +157,15 @@ Protocol: {
   onMount(() => {
     loaded = true;
   });
-  let dark = true;
+  let dark = $state(true);
 </script>
 
-<div class="editor-container" on:mousemove={mouseMove} class:loading={!loaded} class:dark role="application">
+<div class="editor-container" onmousemove={mouseMove} class:loading={!loaded} class:dark role="application">
   <textarea
     name="editor"
     class="editor"
     disabled={!loaded}
     autocomplete="off"
-    autocorrect="off"
     autocapitalize="off"
     spellcheck="false"
     data-gramm="false"
@@ -168,17 +173,17 @@ Protocol: {
     data-enable-grammarly="false"
     placeholder="Insert code here..."
     bind:value={content}
-    on:scroll={updateScroll}
-    on:keydown={handleKeyPress}
-  />
+    onscroll={updateScroll}
+    onkeydown={handleKeyPress}
+></textarea>
   <pre class="highlighter" aria-hidden="true" bind:this={preElement}><code>{@html hightlighted}</code></pre>
   <div id="darkInputContainer">
     <label for="darkinput" class="darkmode">
       <span class="switchOption switchOption-dark" class:active={dark}>
-        <i class="oma oma-crescent-moon" />
+        <i class="oma oma-crescent-moon"></i>
       </span>
       <span class="switchOption switchOption-light" class:active={!dark}>
-        <i class="oma oma-sun" />
+        <i class="oma oma-sun"></i>
       </span>
     </label>
     <input type="checkbox" name="dark-mode" id="darkinput" bind:checked={dark} />

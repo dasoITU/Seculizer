@@ -1,11 +1,16 @@
 <script lang="ts">
-  export let title: string;
+  interface Props {
+    title: string;
+    children?: import('svelte').Snippet;
+  }
+
+  let { title, children }: Props = $props();
 </script>
 
 <div class="message">
   <div class="header">{title}</div>
   <div class="message-inner">
-    <slot>No content was provided</slot>
+    {#if children}{@render children()}{:else}No content was provided{/if}
   </div>
 </div>
 

@@ -8,12 +8,16 @@
     import { crossfade } from "svelte/transition";
     import { quintOut } from "svelte/easing";
 
-  export let stmnt: SendStatement;
-  export let participantElements: ParticipantElements = {
+  interface Props {
+    stmnt: SendStatement;
+    participantElements?: ParticipantElements;
+    nextFrame?: NextFrameNavigation;
+  }
+
+  let { stmnt, participantElements = {
     container: undefined,
     elements: {},
-  };
-  export let nextFrame: NextFrameNavigation = () => {};
+  }, nextFrame = () => {} }: Props = $props();
   const fromId = stmnt.leftId;
   const toId = stmnt.rightId;
   const child = stmnt.child;
@@ -22,8 +26,8 @@
   const castToMatchStatement = (x: SendStatementNode) => x as MatchStatement;
   let from = { left: 0, top: 0, width: 0, height: 0 };
   let to = { left: 0, top: 0, width: 0, height: 0 };
-  let sendLine: HTMLElement;
-  let message: HTMLElement;
+  let sendLine = $state<HTMLElement>();
+  let message = $state<HTMLElement>();
   function update() {
     const fromParticipant = participantElements.elements[fromId.value].getElementsByClassName(
       "participantInnerContainer"
@@ -53,6 +57,7 @@
   }
 
   function updateLine() {
+    if (!sendLine || !message) return;
     let left = from.left + from.width / 2;
     let right = to.left + to.width / 2;
     let length = right - left;
@@ -106,7 +111,7 @@
 	});
 </script>
 
-<svelte:window on:resize={update} />
+<svelte:window onresize={update} />
 <div class="line" bind:this={sendLine} in:receive|global={{key: JSON.stringify(child)}} out:send|global={{key: JSON.stringify(child)}}>
   {#if !child}
     <p>Invalid statement</p>
@@ -125,7 +130,7 @@
     <div class="message multiMessage" bind:this={message}>
       {#each cases as matchCase}
         {@const identifier = getStringFromType(matchCase.case)}
-        <button on:click={() => nextFrame(identifier)}>{identifier}</button>
+        <button onclick={() => nextFrame(identifier)}>{identifier}</button>
       {/each}
     </div>
   {/if}

@@ -21,11 +21,9 @@ export class Tex {
     if (TexArray == null) throw new Error("No matches were found!");
 
     // charIndexArr = array of indexes of characters in TexArray
-    const charIndexArr = TexArray
-      .map((element, index) => {
-        if (element.match(/([a-z,A-Z]+)/g)) return index;
-      })
-      .filter(Boolean);
+    const charIndexArr = TexArray.map((element, index) => {
+      if (element.match(/([a-z,A-Z]+)/g)) return index;
+    }).filter(Boolean);
 
     // paramsIndexArr = array of arrays of indexes of parameters in TexArray
     const paramsIndexArr: number[][] = [];
@@ -85,20 +83,20 @@ export class Tex {
         //Function gets { } around it
         if (!map) throw new Error("No TexMap was given! For Function");
         tmpTex += "{" + map.getConstructedTex(param).slice(1, -1) + "}";
-      } else if(param.type === "id"){
-        if(map && map.contains(param) && !(call.type === "id" && param.value === call.value)){
+      } else if (param.type === "id") {
+        if (map && map.contains(param) && !(call.type === "id" && param.value === call.value)) {
           let rec = map.getConstructedTex(param);
-          if(rec.startsWith("$")){
+          if (rec.startsWith("$")) {
             rec = rec.slice(1);
           }
-          if(rec.endsWith("$")){
+          if (rec.endsWith("$")) {
             rec = rec.slice(0, -1);
           }
           tmpTex += "{" + rec + "}";
-        }else{
+        } else {
           tmpTex += "\\text{" + param.value + "}";
         }
-      }else if (param.type != "number") {
+      } else if (param.type != "number") {
         //Anything else gets \text{ } around it
         tmpTex += "\\text{" + param.value + "}";
       } else {

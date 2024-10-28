@@ -1,12 +1,17 @@
 <script lang="ts">
   import Header from "$lib/components/Header.svelte";
+  interface Props {
+    children?: import('svelte').Snippet;
+  }
+
+  let { children }: Props = $props();
 </script>
 <svelte:head>
   <title>Seculizer</title>
 </svelte:head>
 <div id="main">
   <Header />
-  <slot />
+  {@render children?.()}
 </div>
 
 <style>

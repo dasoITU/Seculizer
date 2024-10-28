@@ -1,9 +1,14 @@
 <script lang="ts">
-    import type { StmtComment } from "$lang/types/parser/interfaces";
-    import Tex from "./Formats/Tex.svelte";
+  import type { StmtComment } from "$lang/types/parser/interfaces";
+  import Tex from "./Formats/Tex.svelte";
 
-    export let comment: StmtComment;
+  interface Props {
+    comment: StmtComment;
+  }
+
+  let { comment }: Props = $props();
 </script>
+
 {#if comment.value.type === "string"}
   {comment.value.value}
 {:else if comment.value.type === "Tex"}

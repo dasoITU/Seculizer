@@ -13,7 +13,7 @@ export class Frame {
     stmnt: Statement | null,
     prev: Frame | null,
     participantMap: ParticipantMap | { [id: string]: Participant },
-    history: { string: string; mermaid: string }[]
+    history: { string: string; mermaid: string }[],
   ) {
     this.next = null;
     this.prev = prev;

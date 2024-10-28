@@ -308,7 +308,7 @@ export class Program {
     this.knowledgeHandler.recheckEncryptedKnowledge(last.getParticipantMap().getParticipant(participant));
     last.addToHistory(
       HistoryTemplates.new(participant, newKnowledge, this),
-      `Note over ${participant}: New ${getStringFromType(newKnowledge)}`
+      `Note over ${participant}: New ${getStringFromType(newKnowledge)}`,
     );
   }
 
@@ -322,7 +322,7 @@ export class Program {
     this.knowledgeHandler.recheckEncryptedKnowledge(last.getParticipantMap().getParticipant(participant));
     last.addToHistory(
       HistoryTemplates.set(participant, knowledge, value, this),
-      `Note over ${participant}: ${getStringFromType(knowledge)} = ${getStringFromType(value)}`
+      `Note over ${participant}: ${getStringFromType(knowledge)} = ${getStringFromType(value)}`,
     );
   }
 
@@ -341,7 +341,7 @@ export class Program {
     knowledge.forEach((expression) => {
       last.addToHistory(
         HistoryTemplates.send(senderId, receiverId, expression, this),
-        `${senderId} ->> ${receiverId}: ${getSimpleStringFromExpression(expression)}`
+        `${senderId} ->> ${receiverId}: ${getSimpleStringFromExpression(expression)}`,
       );
       const sender: Participant = last.getParticipantMap().getParticipant(senderId);
       const receiver: Participant = last.getParticipantMap().getParticipant(receiverId);
@@ -357,9 +357,8 @@ export class Program {
     sender: Participant,
     receiver: Participant,
     last: Frame,
-    canDecrypt = true
+    canDecrypt = true,
   ): ParticipantKnowledge[] {
-
     if (expression.child.type == "encryptExpression") {
       const encryptedExpression = expression.child as EncryptExpression;
       return this.generateEncryptedKnowledge(sender, receiver, encryptedExpression.inner, encryptedExpression.outer, last, canDecrypt);
@@ -374,7 +373,6 @@ export class Program {
       const type = expression.child as Type;
       return [sender.getRawParticipantKnowledge(type)];
     }
-
   }
 
   // Acoomodate encryption of knowledge in messages
@@ -384,12 +382,12 @@ export class Program {
     inner: Expression[],
     outer: Type,
     last: Frame,
-    canDecrypt = true
+    canDecrypt = true,
   ): ParticipantKnowledge[] {
     // if receiver was unable to decrypt an outer expression earlier, it cannot be decrypted now
     // decryptable = true if receiver knows the key, it is therefore not encrypted
     const knowledgeOuter = sender.getRawParticipantKnowledge(outer);
-    
+
     canDecrypt = canDecrypt && this.knowledgeHandler.doesParticipantKnowKey(receiver, knowledgeOuter);
 
     let knowledges: ParticipantKnowledge[] = [];

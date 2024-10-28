@@ -1,41 +1,46 @@
 <script lang="ts">
+  interface Props {
+    content: string;
+  }
 
-  export let content: string;
-  let files: FileList | undefined = undefined;
-  let announcement = { text: "No file selected", isError: false };
-  $: if (files) {
-    if(files.length == 0) {
-      announcement.text = "No file selected";
-      announcement.isError = false;
-    } else if (files.length > 1) {
-      announcement.text = "Only one file can be uploaded at a time";
-      announcement.isError = true;
-    } else {
-      let file = files[0];  
-      
-      if (!file.name.endsWith(".sepo") && !file.name.endsWith(".txt")) {
-        announcement.text = "Unsupported file type";
+  let { content = $bindable() }: Props = $props();
+  let files: FileList | undefined = $state(undefined);
+  let announcement = $state({ text: "No file selected", isError: false });
+  $effect(() => {
+    if (files) {
+      if(files.length == 0) {
+        announcement.text = "No file selected";
+        announcement.isError = false;
+      } else if (files.length > 1) {
+        announcement.text = "Only one file can be uploaded at a time";
         announcement.isError = true;
       } else {
-        announcement.text = "Uploading...";
-        announcement.isError = false;
-        const reader = new FileReader();
-        reader.addEventListener("progress", function (e) {
-          if (e.loaded && e.total) {
-            let percentLoaded = (e.loaded / e.total) * 100;
-            if (percentLoaded < 100)
-              content = ".".repeat(Math.floor(percentLoaded));
-          }
-        });
-        reader.addEventListener("load", function () {
-          content = reader.result as string;
-          announcement.text = file.name;
+        let file = files[0];  
+        
+        if (!file.name.endsWith(".sepo") && !file.name.endsWith(".txt")) {
+          announcement.text = "Unsupported file type";
+          announcement.isError = true;
+        } else {
+          announcement.text = "Uploading...";
           announcement.isError = false;
-        });
-        reader.readAsText(file);
+          const reader = new FileReader();
+          reader.addEventListener("progress", function (e) {
+            if (e.loaded && e.total) {
+              let percentLoaded = (e.loaded / e.total) * 100;
+              if (percentLoaded < 100)
+                content = ".".repeat(Math.floor(percentLoaded));
+            }
+          });
+          reader.addEventListener("load", function () {
+            content = reader.result as string;
+            announcement.text = file.name;
+            announcement.isError = false;
+          });
+          reader.readAsText(file);
+        }
       }
     }
-  }
+  });
 </script>
 
 <input

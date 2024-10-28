@@ -10,10 +10,10 @@ export class Equation {
   private left: FunctionCall;
 
   // The index of the parameters of the right function call in the left function call
-  // For example: 
-      // exp(A,B) => exp(B,A) -> [1, 0]
-      // foo(lee(A,B),C) => foo(A,B) -> [[0,0],1]
-      // foo(A,B) => foo(lee(A,B),B) -> [0,1,1]
+  // For example:
+  // exp(A,B) => exp(B,A) -> [1, 0]
+  // foo(lee(A,B),C) => foo(A,B) -> [[0,0],1]
+  // foo(A,B) => foo(lee(A,B),B) -> [0,1,1]
   private paramIndex: paramIndexType[] = [];
 
   constructor(left: FunctionCall, right: FunctionCall) {

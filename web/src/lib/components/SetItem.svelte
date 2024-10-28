@@ -5,14 +5,24 @@
   import Comment from "./Comment.svelte";
   import Format from "./Formats/Format.svelte";
 
-  export let emoji: string;
-  export let value: Type;
-  export let newValue: Type;
-  export let comment: StmtComment | undefined;
+  interface Props {
+    emoji: string;
+    value: Type;
+    newValue: Type;
+    comment: StmtComment | undefined;
+  }
 
-  let item: HTMLElement;
-  let hoverValues = { left: "0px", top: "100%" };
+  let {
+    emoji,
+    value,
+    newValue,
+    comment
+  }: Props = $props();
+
+  let item = $state<HTMLElement>();
+  let hoverValues = $state({ left: "0px", top: "100%" });
   function handleMouse(e: MouseEvent) {
+    if(!item) return;
     const { clientX, clientY } = e;
     const { left, top } = item.getBoundingClientRect();
     hoverValues.left = `${clientX - left + 10}px`;
@@ -20,7 +30,7 @@
   }
 </script>
 
-<div transition:fade|global={{ delay: 250, duration: 300 }} class="item" bind:this={item} on:mousemove={handleMouse} role="presentation">
+<div transition:fade|global={{ delay: 250, duration: 300 }} class="item" bind:this={item} onmousemove={handleMouse} role="presentation">
   <Emoji content={emoji} />
   <p class="item-text">
     <span class="item-text-inner">

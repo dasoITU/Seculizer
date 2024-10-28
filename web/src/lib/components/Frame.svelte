@@ -9,19 +9,23 @@
   import { program, currentFrame } from "$lib/stores/programStore.js";
   import History from "./History.svelte";
 
-  export let nextFrame: NextFrameNavigation = () => {};
-  $: console.log("Current frame:", $currentFrame);
-  let participants: {
-    Name: Id;
-    Emoji: string;
-    Comment?: StmtComment;
-    Knowledge: VisualKnowledge[];
-  }[] = [];
-  let commonKnowledge: VisualKnowledge[] = [];
-  let presentation: StatementAST | null = null;
-  $: {
-    participants = [];
-    if ($currentFrame) {
+  interface Props {
+    nextFrame?: NextFrameNavigation;
+  }
+
+  let { nextFrame = () => {} }: Props = $props();
+  $effect(() => {
+    console.log("Current frame:", currentFrame);
+  });
+  let { participants, commonKnowledge } = $derived.by(() => {
+    const tmpParticipants: {
+      Name: Id;
+      Emoji: string;
+      Comment?: StmtComment;
+      Knowledge: VisualKnowledge[];
+    }[] = [];
+    let tmpCommonKnowledge: VisualKnowledge[] = [];
+    if ($currentFrame && $program) {
       if ($currentFrame.getParticipantMap()) {
         for (const key in $currentFrame.getParticipantMap().getParticipants()) {
           const participant = $currentFrame.getParticipantMap().getParticipant(key);
@@ -47,17 +51,17 @@
               }),
           };
 
-          if (obj.Name.value === "Shared") commonKnowledge = obj.Knowledge;
-          else participants.push(obj);
-
-          participants = participants;
+          if (obj.Name.value === "Shared") tmpCommonKnowledge = obj.Knowledge;
+          else tmpParticipants.push(obj);
         }
       }
-      presentation = $currentFrame.getPresentation();
     }
-  }
+    return {participants: tmpParticipants, commonKnowledge: tmpCommonKnowledge};
+  });
+  let presentation: StatementAST | null = $derived($currentFrame.getPresentation());
+  $effect(() => {});
 
-  let participantElements: ParticipantElements = { container: undefined, elements: {} };
+  let participantElements: ParticipantElements = $state({ container: undefined, elements: {} });
 </script>
 
 <div class="frame">

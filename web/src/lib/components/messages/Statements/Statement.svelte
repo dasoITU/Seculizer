@@ -29,9 +29,13 @@
 			};
 		}
 	});
-  export let statement: StatementAST;
-  export let participantElements: ParticipantElements = { container: undefined, elements: {} };
-  export let nextFrame: NextFrameNavigation = () => {};
+  interface Props {
+    statement: StatementAST;
+    participantElements?: ParticipantElements;
+    nextFrame?: NextFrameNavigation;
+  }
+
+  let { statement, participantElements = { container: undefined, elements: {} }, nextFrame = () => {} }: Props = $props();
 
   const castToSendStatement = (x: StatementNode) => x as SendStatementAST;
   const castToClearStatement = (x: StatementNode) => x as ClearStatementAST;

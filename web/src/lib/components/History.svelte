@@ -1,15 +1,16 @@
 <script lang="ts">
+
   import SequenceDiagram from "./SequenceDiagram.svelte";
   import { currentFrame } from "$lib/stores/programStore.js";
 
   type state = "history" | "sequenceDiagram";
-  let historyState: { state: state; open: boolean } = { state: "history", open: false };
-  let historyElem: HTMLOListElement;
-  $: {
+  let historyState: { state: state; open: boolean } = $state({ state: "history", open: false });
+  let historyElem = $state<HTMLOListElement>();
+  $effect(() => {
     if (historyState.open && historyElem) {
       historyElem.scrollTop = historyElem.offsetHeight;
     }
-  }
+  });
 
   function toggleHistory() {
     if (historyState.state === "sequenceDiagram") {
@@ -56,8 +57,8 @@
     <SequenceDiagram />
   </div>
   <div class="buttonContainer">
-    <button class="roundButton" on:click={toggleSequenceDiagram}><i class="oma oma-people-dialogue" /></button>
-    <button class="roundButton" on:click={toggleHistory}><i class="oma oma-hourglass-not-done" /></button>
+    <button class="roundButton" onclick={toggleSequenceDiagram} aria-label="Toggle sequence diagram"><i class="oma oma-people-dialogue"></i></button>
+    <button class="roundButton" onclick={toggleHistory} aria-label="Toggle history"><i class="oma oma-hourglass-not-done"></i></button>
   </div>
 </div>
 
