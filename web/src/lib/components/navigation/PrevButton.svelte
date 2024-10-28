@@ -1,14 +1,18 @@
 <script lang="ts">
   import type { Navigation } from "src/types/app";
 
-  export let navigation: Navigation = {
+
+  interface Props {
+    navigation?: Navigation;
+    prevFrame?: () => void;
+  }
+
+  let { navigation = {
     prev: null,
     next: null,
-  };
-
-  export let prevFrame: () => void = () => {};
+  }, prevFrame = () => {} }: Props = $props();
 </script>
 
 {#if navigation.prev !== null}
-  <button on:click={() => prevFrame()}>Back</button>
+  <button onclick={() => prevFrame()}>Back</button>
 {/if}

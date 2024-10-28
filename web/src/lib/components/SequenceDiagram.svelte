@@ -1,9 +1,10 @@
 <script lang="ts">
+
   import mermaid from "mermaid";
   import { onMount } from "svelte";
   import { currentFrame } from "$lib/stores/programStore.js";
-  let graph: HTMLElement;
-  let content = "";
+  let graph = $state<HTMLElement>();
+  let content = $state("");
   let isInitialized = false;
   function getContent() {
     content = "sequenceDiagram\n";
@@ -48,11 +49,14 @@
     }
   }
 
-  $: $currentFrame && $currentFrame.getHistory() && rerender();
+  $effect(() => {
+    $currentFrame && $currentFrame.getHistory() && rerender();
+  });
+
 </script>
 
 {#if $currentFrame && $currentFrame.getHistory().length > 0 && content.trim() !== ""}
-  <pre bind:this={graph} />
+  <pre bind:this={graph}></pre>
 {:else}
   <p class="no-history">No history yet</p>
 {/if}

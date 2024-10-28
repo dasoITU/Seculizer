@@ -115,10 +115,10 @@ test("web/program with send-with-sign.sepo", () => {
   expect(last.getParticipantMap().getParticipant("Bob")).toBeDefined();
 
   expect(last.getParticipantMap().getParticipant("Alice").getKnowledgeList().length).toBeGreaterThan(
-    first.getParticipantMap().getParticipant("Alice").getKnowledgeList().length
+    first.getParticipantMap().getParticipant("Alice").getKnowledgeList().length,
   );
   expect(last.getParticipantMap().getParticipant("Bob").getKnowledgeList().length).toBeGreaterThan(
-    first.getParticipantMap().getParticipant("Bob").getKnowledgeList().length
+    first.getParticipantMap().getParticipant("Bob").getKnowledgeList().length,
   );
 
   const msg_A: ParticipantKnowledge = {
@@ -181,10 +181,10 @@ test("web/program with send-with-enc.sepo", () => {
   expect(last.getParticipantMap().getParticipant("Bob")).toBeDefined();
 
   expect(last.getParticipantMap().getParticipant("Alice").getKnowledgeList().length).toBeGreaterThan(
-    first.getParticipantMap().getParticipant("Alice").getKnowledgeList().length
+    first.getParticipantMap().getParticipant("Alice").getKnowledgeList().length,
   );
   expect(last.getParticipantMap().getParticipant("Bob").getKnowledgeList().length).toBeGreaterThan(
-    first.getParticipantMap().getParticipant("Bob").getKnowledgeList().length
+    first.getParticipantMap().getParticipant("Bob").getKnowledgeList().length,
   );
 
   const msg_A: ParticipantKnowledge = {
@@ -513,7 +513,6 @@ test("Construct an EquationMap with functions with nested right functions", () =
   expect(result3_4).toBeFalsy();
 });
 
-
 test("Functions with nested right functions and multiple steps don't work", () => {
   const init_param1: Type = { type: "id", value: "a" };
   const init_param2: Type = { type: "id", value: "b" };
@@ -795,7 +794,6 @@ test("Does participant know opaque function?", () => {
   expect(result2).toBeFalsy();
   expect(result3).toBeTruthy();
 });
-
 
 test("Does participant know id and function with keyRelation?", () => {
   const init_param1: Type = { type: "id", value: "a" };

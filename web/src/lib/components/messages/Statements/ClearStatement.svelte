@@ -7,11 +7,15 @@
   import { program } from "$lib/stores/programStore.js";
   import { onMount } from "svelte";
     import { fade } from "svelte/transition";
-  export let stmnt: ClearStatement;
+  interface Props {
+    stmnt: ClearStatement;
+  }
+
+  let { stmnt }: Props = $props();
 
   const id = stmnt.id;
   const icon = $program.getIcon(id.value);
-  let top = "10%";
+  let top = $state("10%");
 
   onMount(() => {
     const commonKnowledge = document.getElementById("commonKnowledgeContainer");

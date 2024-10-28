@@ -99,9 +99,9 @@ export class Participant {
     const tmpRawKnowledge: RawParticipantKnowledge = {
       type: "rawKnowledge",
       knowledge: knowledge,
-      value: this.getValueOfKnowledge(knowledge)
+      value: this.getValueOfKnowledge(knowledge),
     };
-    return tmpRawKnowledge
+    return tmpRawKnowledge;
   }
 
   cloneKnowledgeList(): { item: ParticipantKnowledge; id: number }[] {

@@ -14,11 +14,11 @@ type format =
 export class FormatMap {
   formatMap: { [id: string]: format } = {};
 
-  private constructKey(call: FunctionCall) : string {
+  private constructKey(call: FunctionCall): string {
     return call.id + "!p" + call.params.length;
   }
 
-  private constructFormat(format: Tex | string) : format {
+  private constructFormat(format: Tex | string): format {
     if (format instanceof Tex) return { type: "Tex", value: format };
     else return { type: "string", value: format };
   }
@@ -52,7 +52,6 @@ export class FormatMap {
         str += ")$";
         return str;
       }
-
 
       if (format.type == "Tex") {
         return format.value.constructTex(call, this);

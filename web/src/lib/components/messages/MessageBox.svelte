@@ -1,9 +1,13 @@
 <script lang="ts">
   import ExpressionBox from "./ExpressionBox.svelte";
   import type { Expression as ExpressionAST, Id} from "$lang/types/parser/interfaces";
-  export let messageExpressions:ExpressionAST[];
-  export let participants:{from:Id, to:Id};
-  export let isSubmessage = false;
+  interface Props {
+    messageExpressions: ExpressionAST[];
+    participants: {from:Id, to:Id};
+    isSubmessage?: boolean;
+  }
+
+  let { messageExpressions, participants, isSubmessage = false }: Props = $props();
 </script>
 
 <div class="message" class:subMessage={isSubmessage}>
@@ -28,10 +32,10 @@
     min-height: 2rem;
     max-width: 15rem;
   }
-  .message:has(.sign-icon), .message:has(.encrypt-icon) {
+  .message:global(:has(.sign-icon)), .message:global(:has(.encrypt-icon)) {
     margin-bottom: 2rem;
   }
-  .message :global(.innerExpression):has(.sign-icon), .message :global(.innerExpression):has(.encrypt-icon) {
+  .message :global(.innerExpression:has(.sign-icon)), .message :global(.innerExpression:has(.encrypt-icon)) {
     margin-bottom: 1.9rem;
   }
 

@@ -5,12 +5,17 @@
   import { getStringFromType } from "$lib/utils/stringUtil";
   import { program } from "$lib/stores/programStore.js";
     import Format from "../Formats/Format.svelte";
-  export let signType: Type;
-  export let signieIcon: string;
-  export let comment: StmtComment | undefined;
-  let item: HTMLElement;
-  let hoverValues = { left: "0px", top: "100%" };
+  interface Props {
+    signType: Type;
+    signieIcon: string;
+    comment: StmtComment | undefined;
+  }
+
+  let { signType, signieIcon, comment }: Props = $props();
+  let item = $state<HTMLElement | undefined>();
+  let hoverValues = $state({ left: "0px", top: "100%" });
   function handleMouse(e: MouseEvent) {
+    if(!item) return;
     const { clientX, clientY } = e;
     const { left, top } = item.getBoundingClientRect();
     hoverValues.left = `${clientX - left + 10}px`;
@@ -18,7 +23,7 @@
   }
 </script>
 
-<div class="sign-icon" bind:this={item} on:mousemove={handleMouse} role="presentation">
+<div class="sign-icon" bind:this={item} onmousemove={handleMouse} role="presentation">
   <div class="emoji-container">
     <Emoji classes="pen" content="pen" />
     <span class="signie-emoji">

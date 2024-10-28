@@ -1,18 +1,29 @@
 <script lang="ts">
   import { fly } from "svelte/transition";
   import type { Id, StmtComment, Type } from "$lang/types/parser/interfaces";
-  import type { ParticipantKnowledge, VisualKnowledge } from "src/types/participant";
+  import type { ParticipantKnowledge, RawParticipantKnowledge, VisualKnowledge } from "src/types/participant";
   import Item from "./Item.svelte";
   import Comment from "./Comment.svelte";
   import Format from "./Formats/Format.svelte";
 
-  export let name: Id;
-  export let emoji: string;
-  export let comment: StmtComment | undefined;
-  export let knowledge: VisualKnowledge[] = [];
-  export let pos = { left: 0, top: 0 };
-  export let element: HTMLElement;
-  let showKnowledge = false;
+  interface Props {
+    name: Id;
+    emoji: string;
+    comment: StmtComment | undefined;
+    knowledge?: VisualKnowledge[];
+    pos?: any;
+    element: HTMLElement;
+  }
+
+  let {
+    name,
+    emoji,
+    comment,
+    knowledge = [],
+    pos = { left: 0, top: 0 },
+    element = $bindable()
+  }: Props = $props();
+  let showKnowledge = $state(false);
 
   function nodeContains(event: MouseEvent, container: HTMLElement) {
     let node = event.relatedTarget as Node;
@@ -29,7 +40,7 @@
     }
     return flat;
   }
-  let endHover = false;
+  let endHover = $state(false);
 </script>
 
 <div
@@ -38,17 +49,17 @@
   style:left={pos.left + "px"}
   style:top={pos.top + "px"}
   bind:this={element}
-  on:focus={() => {
+  onfocus={() => {
     showKnowledge = true;
   }}
-  on:blur={() => {
+  onblur={() => {
     showKnowledge = false;
   }}
-  on:mouseover={() => {
+  onmouseover={() => {
     showKnowledge = true;
     endHover = false;
   }}
-  on:mouseout={(e) => {
+  onmouseout={(e) => {
     if (nodeContains(e, element)) return;
     endHover = true;
     setTimeout(() => {
@@ -59,11 +70,13 @@
   <div class="participantInnerContainer">
     <div class="participant-item">
       <Item value={name} {emoji}>
-        <svelte:fragment slot="hover">
-          {#if comment}
-            <Comment {comment} />
-          {/if}
-        </svelte:fragment>
+        {#snippet hover()}
+              
+            {#if comment}
+              <Comment {comment} />
+            {/if}
+          
+              {/snippet}
       </Item>
     </div>
   </div>
@@ -86,7 +99,7 @@
                     {/if}
                   </Item>
                 {/each}
-              {:else}
+              {:else if visualKnowledge.knowledge.type === "rawKnowledge"}
                 {@const value = visualKnowledge.knowledge.value}
                 <Item value={visualKnowledge.knowledge.knowledge} emoji={visualKnowledge.emoji}>
                   {#if value}
@@ -94,11 +107,13 @@
                       <Format input={value} />
                     </small>
                   {/if}
-                  <svelte:fragment slot="hover">
-                    {#if visualKnowledge.knowledge.comment}
-                      <Comment comment={visualKnowledge.knowledge.comment} />
-                    {/if}
-                  </svelte:fragment>
+                  {#snippet hover()}
+                    {@const rawKnowledge = visualKnowledge.knowledge as RawParticipantKnowledge}
+                      {#if rawKnowledge.comment}
+                        <Comment comment={rawKnowledge.comment} />
+                      {/if}
+                    
+                  {/snippet}
                 </Item>
               {/if}
             </div>

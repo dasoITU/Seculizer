@@ -3,22 +3,26 @@
   import { calcPositions } from "$lib/utils/PositionUtil";
   import type { VisualKnowledge } from "src/types/participant";
   import Participant from "./Participant.svelte";
-  export let participants: {
-    Name: Id;
-    Emoji: string;
-    Comment?: StmtComment
-    Knowledge: VisualKnowledge[];
-  }[] = [];
 
-  let container: HTMLElement;
-  let containerWidth: number;
-  let containerHeight: number;
-  let positions: { x: number; y: number }[] = [];
-  $: {
-    if (container) positions = calcPositions(participants.length, container);
-  }
-  export let participantElements: { [key: string]: HTMLElement } = {};
-  
+  let container = $state<HTMLElement>();
+  let containerWidth = $state<number>();
+  let containerHeight = $state<number>();
+    interface Props {
+      participants?: {
+        Name: Id;
+        Emoji: string;
+        Comment?: StmtComment
+        Knowledge: VisualKnowledge[];
+      }[];
+      participantElements?: { [key: string]: HTMLElement };
+    }
+    
+    let { participants = [], participantElements = $bindable({}) }: Props = $props();
+    
+  let positions: { x: number; y: number }[] = $derived.by(() => {
+      if (container && participants.length > 0) return calcPositions(participants.length, container);
+      return [];
+  });
 </script>
 
 <div class="container" bind:this={container} bind:offsetWidth={containerWidth} bind:offsetHeight={containerHeight}>

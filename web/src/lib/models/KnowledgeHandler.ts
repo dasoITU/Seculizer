@@ -210,11 +210,11 @@ export class KnowledgeHandler {
   doesParticipantKnowKey(parti: Participant, knowledge: RawParticipantKnowledge): boolean {
     const sk = this.convertPKToSK(knowledge.knowledge);
 
-    const tmpRawKnowledge : RawParticipantKnowledge = {
+    const tmpRawKnowledge: RawParticipantKnowledge = {
       type: "rawKnowledge",
       knowledge: sk,
       value: knowledge.value,
-    }
+    };
 
     return this.doesParticipantKnow(parti, tmpRawKnowledge);
   }
@@ -303,7 +303,7 @@ export class KnowledgeHandler {
 
     if (this.isSimpleKnowledge(knowledge)) return;
     let tmp_knowledge = sender.getKnowledge(knowledge, false);
-    if(!tmp_knowledge && this.sharedKnowledge) tmp_knowledge = this.sharedKnowledge.getKnowledge(knowledge, false)
+    if (!tmp_knowledge && this.sharedKnowledge) tmp_knowledge = this.sharedKnowledge.getKnowledge(knowledge, false);
     if (tmp_knowledge) receiver.setKnowledge(tmp_knowledge);
     else {
       if (knowledge.type === "rawKnowledge" && knowledge.knowledge.type !== "function")
@@ -315,7 +315,7 @@ export class KnowledgeHandler {
 
   private isSimpleKnowledge(knowledge: ParticipantKnowledge): boolean {
     if (knowledge.type === "rawKnowledge") {
-      return this.isSimpleType(knowledge.knowledge); 
+      return this.isSimpleType(knowledge.knowledge);
     }
     return knowledge.knowledge.every((item) => this.isSimpleKnowledge(item));
   }
@@ -347,7 +347,7 @@ export class KnowledgeHandler {
     if (updated) this.recheckEncryptedKnowledge(parti); //This could be if something is encrypted with something encrypted
   }
 
-  setSharedKnowledge(participant:Participant) {
+  setSharedKnowledge(participant: Participant) {
     this.sharedKnowledge = participant;
   }
 }

@@ -3,11 +3,16 @@
   import Emoji from "$lib/components/Emoji.svelte";
   import Comment from "$lib/components/Comment.svelte";
   import Format from "../Formats/Format.svelte";
-  export let encryptType: Type;
-  export let comment: StmtComment | undefined;
-  let item: HTMLElement;
-  let hoverValues = { left: "0px", top: "100%" };
+  interface Props {
+    encryptType: Type;
+    comment: StmtComment | undefined;
+  }
+
+  let { encryptType, comment }: Props = $props();
+  let item = $state<HTMLElement>();
+  let hoverValues = $state({ left: "0px", top: "100%" });
   function handleMouse(e: MouseEvent) {
+    if(!item) return;
     const { clientX, clientY } = e;
     const { left, top } = item.getBoundingClientRect();
     hoverValues.left = `${clientX - left + 10}px`;
@@ -15,7 +20,7 @@
   }
 </script>
 
-<div class="encrypt-icon" bind:this={item} on:mousemove={handleMouse} role="presentation">
+<div class="encrypt-icon" bind:this={item} onmousemove={handleMouse} role="presentation">
   <Emoji content="locked" />
   <div class="id-container">
     <p>

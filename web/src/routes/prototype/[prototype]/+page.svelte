@@ -11,12 +11,12 @@
   import Frame from "$lib/components/Frame.svelte";
   import PrevButton from "$lib/components/navigation/PrevButton.svelte";
   import NextButton from "$lib/components/navigation/NextButton.svelte";
-  let error: string | undefined = undefined;
-  let navigation: Navigation = {
+  let error: string | undefined = $state(undefined);
+  let navigation: Navigation = $state({
     prev: null,
     next: null,
-  };
-  let loaded = false;
+  });
+  let loaded = $state(false);
   onMount(() => {
     if ($page.params.prototype === undefined) return;
     const proto = $page.params.prototype;
@@ -88,7 +88,7 @@
   }
 
 </script>
-<svelte:window on:keydown={handleKeyPress} />
+<svelte:window onkeydown={handleKeyPress} />
 {#if error}
   <p class="error">{error}</p>
 {/if}

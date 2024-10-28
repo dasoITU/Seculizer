@@ -11,8 +11,8 @@ export class ParticipantMap {
         (this.participants[participant] = new Participant(
           participant,
           participants[participant].cloneKnowledgeList(),
-          participants[participant].getComment()
-        ))
+          participants[participant].getComment(),
+        )),
     );
   }
 

@@ -13,7 +13,7 @@ const HistoryTemplates = {
   set: (participant: string, knowledge: Type, value: Type, program: Program) => {
     return `${formatId(participant, program)} set ${getFormattedTypeAsHTML(knowledge, program)} to ${getFormattedTypeAsHTML(
       value,
-      program
+      program,
     )}`;
   },
   send: (sender: string, reciever: string, expression: Expression, program: Program) => {

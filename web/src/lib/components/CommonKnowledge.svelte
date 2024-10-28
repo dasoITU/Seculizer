@@ -1,10 +1,14 @@
 <script lang="ts">
   import type { Type } from "$lang/types/parser/interfaces";
-  import type { ParticipantKnowledge, VisualKnowledge } from "src/types/participant";
+  import type { ParticipantKnowledge, RawParticipantKnowledge, VisualKnowledge } from "src/types/participant";
   import Item from "./Item.svelte";
   import Comment from "./Comment.svelte";
 
-  export let knowledges: VisualKnowledge[] = [];
+  interface Props {
+    knowledges?: VisualKnowledge[];
+  }
+
+  let { knowledges = [] }: Props = $props();
 
   function flatKnowledgeTypes(knowledges: ParticipantKnowledge[]): Type[] {
     let flat: Type[] = [];
@@ -30,13 +34,15 @@
           {#each flatKnowledgeTypes(visualKnowledge.knowledge.knowledge) as encryptedKnowledgeType}
             <Item value={encryptedKnowledgeType} emoji={visualKnowledge.emoji} />
           {/each}
-        {:else}
+        {:else if visualKnowledge.knowledge.type === "rawKnowledge"}
           <Item value={visualKnowledge.knowledge.knowledge} emoji={visualKnowledge.emoji}>
-            <svelte:fragment slot="hover">
-              {#if visualKnowledge.knowledge.comment}
-                <Comment comment={visualKnowledge.knowledge.comment} />
-              {/if}
-            </svelte:fragment>
+            {#snippet hover()}
+                {@const rawKnowledge = visualKnowledge.knowledge as RawParticipantKnowledge}
+                {#if rawKnowledge.comment}
+                  <Comment comment={rawKnowledge.comment} />
+                {/if}
+              
+            {/snippet}
           </Item>
         {/if}
       {/each}
