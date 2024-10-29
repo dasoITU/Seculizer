@@ -51,8 +51,9 @@
 {:else if statement.child.type === "participantStatement"}
   <ParticipantStatement {participantElements} stmnt={castToParticipantsStatement(statement.child)} />
 {/if}
-{#if statement.comment && statement.comment !== null}
-    <p class="comment" in:receive|global={{key: statement.comment.value}} out:send|global={{key: statement.comment.value}}>
+{#if statement !== null && statement.comment && statement.comment !== null && statement.comment.value}
+    {@const key =  statement?.comment?.value || ''}
+    <p class="comment" in:receive|global={{key}} out:send|global={{key}}>
       <Comment comment={statement.comment} />
       <svg width="134" height="142" viewBox="0 0 134 142" fill="none" class="seculizer-icon" xmlns="http://www.w3.org/2000/svg">
         <rect x="30" y="36" width="79" height="73" fill="white"/>

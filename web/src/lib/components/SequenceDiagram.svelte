@@ -1,25 +1,24 @@
 <script lang="ts">
-
   import mermaid from "mermaid";
   import { onMount } from "svelte";
   import { currentFrame } from "$lib/stores/programStore.js";
   let graph = $state<HTMLElement>();
-  let content = $state("");
-  let isInitialized = false;
-  function getContent() {
-    content = "sequenceDiagram\n";
-    if(!$currentFrame) return;
+  let content = $derived.by(() => {
+    let tmpContent = "sequenceDiagram\n";
+    if (!$currentFrame) return;
     $currentFrame
       .getParticipantMap()
       .getParticipantsNames()
       .forEach((name) => {
         if (name === "Shared") return;
-        content += `participant ${name}\n`;
+        tmpContent += `participant ${name}\n`;
       });
     $currentFrame.getHistory().forEach((event) => {
-      if (event.mermaid.trim() !== "") content += event.mermaid + "\n";
+      if (event.mermaid.trim() !== "") tmpContent += event.mermaid + "\n";
     });
-  }
+    return tmpContent;
+  });
+  let isInitialized = false;
   onMount(async () => {
     mermaid.initialize({
       startOnLoad: false,
@@ -31,17 +30,15 @@
     });
     isInitialized = true;
     if (!graph) return;
-    getContent();
-    const { svg } = await mermaid.render("graphDiv", content);
+    const { svg } = await mermaid.render("graphDiv", content || '');
     graph.innerHTML = svg;
   });
 
   function rerender() {
     {
       if (isInitialized) {
-        getContent();
 
-        mermaid.render("graphDiv", content).then(({ svg }) => {
+        mermaid.render("graphDiv", content || '').then(({ svg }) => {
           if (!graph) return;
           graph.innerHTML = svg;
         });
@@ -52,10 +49,9 @@
   $effect(() => {
     $currentFrame && $currentFrame.getHistory() && rerender();
   });
-
 </script>
 
-{#if $currentFrame && $currentFrame.getHistory().length > 0 && content.trim() !== ""}
+{#if $currentFrame && $currentFrame.getHistory().length > 0 && content && content.trim() !== ""}
   <pre bind:this={graph}></pre>
 {:else}
   <p class="no-history">No history yet</p>

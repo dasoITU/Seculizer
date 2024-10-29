@@ -36,11 +36,10 @@ Protocol: {
     tokenTypeIdx: number;
     tokenType: TokenType;
   };
-  let tokens: Token[] = $state([]);
 
   $effect(() => {
     if (content !== "" && content) {
-      tokens = SepoLexer.tokenize(content + " eof").tokens;
+      let tokens: Token[] = SepoLexer.tokenize(content + " eof").tokens;
       let tmp = new MagicString(content);
       let re = /(\r\n)|\n/g;
       let match;
@@ -48,7 +47,6 @@ Protocol: {
       tmp.prependLeft(0, `<span class="line">${line++}</span>`);
       while ((match = re.exec(content)) != null) {
         tmp.update(match.index, match.index + match[0].length, `</br><span class="line">${line++}</span>`);
-        //tmp.prependLeft(match.index, `<span class="line">${line++}</span>`);
       }
       tokens.forEach((token) => {
         let type = token.tokenType.name;
@@ -60,7 +58,7 @@ Protocol: {
       });
       try {
         let ast = parse(content, false);
-        let program = new Program(ast, false);
+        new Program(ast, false);
       } catch (e: any) {
         if (e instanceof Error && e instanceof ParseError) {
           let error = e as ParseError;
