@@ -1,4 +1,4 @@
-// Vitest Snapshot v1
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`should parse Authenticated-Diffie-hellman.sepo 1`] = `
 {
@@ -1029,7 +1029,7 @@ exports[`should parse El-Gamal simple.sepo 1`] = `
       {
         "format": {
           "type": "Tex",
-          "value": "$x^{y}$",
+          "value": "$(x)^{y}$",
         },
         "id": {
           "id": "exp",
@@ -1050,7 +1050,7 @@ exports[`should parse El-Gamal simple.sepo 1`] = `
       {
         "format": {
           "type": "Tex",
-          "value": "$(x) \\\\text{ mod } y$",
+          "value": "$x \\text{ mod } y$",
         },
         "id": {
           "id": "mod",
@@ -1104,7 +1104,7 @@ exports[`should parse El-Gamal simple.sepo 1`] = `
       "r" => "input-numbers",
       "alice_sk" => "key",
       "alice_pk" => "key",
-      "msgB" => "📝",
+      "msgB" => "memo",
     },
     "type": "icons",
   },
@@ -1445,7 +1445,7 @@ exports[`should parse El-Gamal.sepo 1`] = `
       {
         "format": {
           "type": "Tex",
-          "value": "$x^{y}$",
+          "value": "$(x)^{y}$",
         },
         "id": {
           "id": "exp",
@@ -1466,7 +1466,7 @@ exports[`should parse El-Gamal.sepo 1`] = `
       {
         "format": {
           "type": "Tex",
-          "value": "$(x) \\\\text{ mod } y$",
+          "value": "$x \\text{ mod } y$",
         },
         "id": {
           "id": "mod",
@@ -1508,7 +1508,7 @@ exports[`should parse El-Gamal.sepo 1`] = `
       "exp" => "input-numbers",
       "r" => "input-numbers",
       "alice_sk" => "key",
-      "msgB" => "📝",
+      "msgB" => "memo",
     },
     "type": "icons",
   },
@@ -2044,7 +2044,7 @@ exports[`should parse Envelope.sepo 1`] = `
               {
                 "child": {
                   "type": "string",
-                  "value": "\\"Boot\\"",
+                  "value": ""Boot"",
                 },
                 "type": "expression",
               },
@@ -2105,7 +2105,7 @@ exports[`should parse Envelope.sepo 1`] = `
               {
                 "child": {
                   "type": "string",
-                  "value": "\\"Booted\\"",
+                  "value": ""Booted"",
                 },
                 "type": "expression",
               },
@@ -2194,7 +2194,7 @@ exports[`should parse Envelope.sepo 1`] = `
               {
                 "child": {
                   "type": "string",
-                  "value": "\\"Session\\"",
+                  "value": ""Session"",
                 },
                 "type": "expression",
               },
@@ -2313,7 +2313,7 @@ exports[`should parse Envelope.sepo 1`] = `
                     {
                       "child": {
                         "type": "string",
-                        "value": "\\"Extend\\"",
+                        "value": ""Extend"",
                       },
                       "type": "expression",
                     },
@@ -2407,7 +2407,7 @@ exports[`should parse Envelope.sepo 1`] = `
               {
                 "child": {
                   "type": "string",
-                  "value": "\\"Extended\\"",
+                  "value": ""Extended"",
                 },
                 "type": "expression",
               },
@@ -2447,7 +2447,7 @@ exports[`should parse Envelope.sepo 1`] = `
               {
                 "child": {
                   "type": "string",
-                  "value": "\\"Create\\"",
+                  "value": ""Create"",
                 },
                 "type": "expression",
               },
@@ -2457,7 +2457,7 @@ exports[`should parse Envelope.sepo 1`] = `
                   "params": [
                     {
                       "type": "string",
-                      "value": "\\"obt\\"",
+                      "value": ""obt"",
                     },
                     {
                       "type": "id",
@@ -2525,7 +2525,7 @@ exports[`should parse Envelope.sepo 1`] = `
                     {
                       "child": {
                         "type": "string",
-                        "value": "\\"Created\\"",
+                        "value": ""Created"",
                       },
                       "type": "expression",
                     },
@@ -2542,7 +2542,7 @@ exports[`should parse Envelope.sepo 1`] = `
                         "params": [
                           {
                             "type": "string",
-                            "value": "\\"obt\\"",
+                            "value": ""obt"",
                           },
                           {
                             "type": "id",
@@ -2639,7 +2639,7 @@ exports[`should parse Envelope.sepo 1`] = `
               {
                 "child": {
                   "type": "string",
-                  "value": "\\"Envelope\\"",
+                  "value": ""Envelope"",
                 },
                 "type": "expression",
               },
@@ -2722,7 +2722,7 @@ exports[`should parse Envelope.sepo 1`] = `
               {
                 "child": {
                   "type": "string",
-                  "value": "\\"Session\\"",
+                  "value": ""Session"",
                 },
                 "type": "expression",
               },
@@ -2838,7 +2838,7 @@ exports[`should parse Envelope.sepo 1`] = `
               {
                 "case": {
                   "type": "string",
-                  "value": "\\"Refuse\\"",
+                  "value": ""Refuse"",
                 },
                 "children": [
                   {
@@ -2851,14 +2851,14 @@ exports[`should parse Envelope.sepo 1`] = `
                                 {
                                   "child": {
                                     "type": "string",
-                                    "value": "\\"Extend\\"",
+                                    "value": ""Extend"",
                                   },
                                   "type": "expression",
                                 },
                                 {
                                   "child": {
                                     "type": "string",
-                                    "value": "\\"ref\\"",
+                                    "value": ""ref"",
                                   },
                                   "type": "expression",
                                 },
@@ -2913,7 +2913,7 @@ exports[`should parse Envelope.sepo 1`] = `
                           "params": [
                             {
                               "type": "string",
-                              "value": "\\"ref\\"",
+                              "value": ""ref"",
                             },
                             {
                               "type": "id",
@@ -2945,7 +2945,7 @@ exports[`should parse Envelope.sepo 1`] = `
                           {
                             "child": {
                               "type": "string",
-                              "value": "\\"Extended\\"",
+                              "value": ""Extended"",
                             },
                             "type": "expression",
                           },
@@ -2985,7 +2985,7 @@ exports[`should parse Envelope.sepo 1`] = `
                           {
                             "child": {
                               "type": "string",
-                              "value": "\\"Quote\\"",
+                              "value": ""Quote"",
                             },
                             "type": "expression",
                           },
@@ -3040,7 +3040,7 @@ exports[`should parse Envelope.sepo 1`] = `
                                 {
                                   "child": {
                                     "type": "string",
-                                    "value": "\\"Quoted\\"",
+                                    "value": ""Quoted"",
                                   },
                                   "type": "expression",
                                 },
@@ -3107,7 +3107,7 @@ exports[`should parse Envelope.sepo 1`] = `
               {
                 "case": {
                   "type": "string",
-                  "value": "\\"Obtain\\"",
+                  "value": ""Obtain"",
                 },
                 "children": [
                   {
@@ -3120,14 +3120,14 @@ exports[`should parse Envelope.sepo 1`] = `
                                 {
                                   "child": {
                                     "type": "string",
-                                    "value": "\\"Extend\\"",
+                                    "value": ""Extend"",
                                   },
                                   "type": "expression",
                                 },
                                 {
                                   "child": {
                                     "type": "string",
-                                    "value": "\\"obt\\"",
+                                    "value": ""obt"",
                                   },
                                   "type": "expression",
                                 },
@@ -3182,7 +3182,7 @@ exports[`should parse Envelope.sepo 1`] = `
                           "params": [
                             {
                               "type": "string",
-                              "value": "\\"obt\\"",
+                              "value": ""obt"",
                             },
                             {
                               "type": "id",
@@ -3214,7 +3214,7 @@ exports[`should parse Envelope.sepo 1`] = `
                           {
                             "child": {
                               "type": "string",
-                              "value": "\\"Extended\\"",
+                              "value": ""Extended"",
                             },
                             "type": "expression",
                           },
@@ -3254,7 +3254,7 @@ exports[`should parse Envelope.sepo 1`] = `
                           {
                             "child": {
                               "type": "string",
-                              "value": "\\"Decrypt\\"",
+                              "value": ""Decrypt"",
                             },
                             "type": "expression",
                           },
@@ -3618,14 +3618,14 @@ exports[`should parse Needham-Schroeder-Public-Key.sepo 1`] = `
               {
                 "child": {
                   "type": "string",
-                  "value": "\\"Alice\\"",
+                  "value": ""Alice"",
                 },
                 "type": "expression",
               },
               {
                 "child": {
                   "type": "string",
-                  "value": "\\"Bob\\"",
+                  "value": ""Bob"",
                 },
                 "type": "expression",
               },
@@ -3773,14 +3773,14 @@ exports[`should parse Needham-Schroeder-Public-Key.sepo 1`] = `
               {
                 "child": {
                   "type": "string",
-                  "value": "\\"Bob\\"",
+                  "value": ""Bob"",
                 },
                 "type": "expression",
               },
               {
                 "child": {
                   "type": "string",
-                  "value": "\\"Alice\\"",
+                  "value": ""Alice"",
                 },
                 "type": "expression",
               },
@@ -5297,7 +5297,7 @@ exports[`should parse TLS-1_3.sepo 1`] = `
               {
                 "child": {
                   "type": "string",
-                  "value": "\\"Client Hello\\"",
+                  "value": ""Client Hello"",
                 },
                 "type": "expression",
               },
@@ -5390,7 +5390,7 @@ exports[`should parse TLS-1_3.sepo 1`] = `
               {
                 "child": {
                   "type": "string",
-                  "value": "\\"Server Hello\\"",
+                  "value": ""Server Hello"",
                 },
                 "type": "expression",
               },
@@ -7430,7 +7430,7 @@ exports[`should parse simple_match.sepo 1`] = `
               {
                 "case": {
                   "type": "string",
-                  "value": "\\"Refuse\\"",
+                  "value": ""Refuse"",
                 },
                 "children": [
                   {
@@ -7440,7 +7440,7 @@ exports[`should parse simple_match.sepo 1`] = `
                           {
                             "child": {
                               "type": "string",
-                              "value": "\\"Refused\\"",
+                              "value": ""Refused"",
                             },
                             "type": "expression",
                           },
@@ -7466,7 +7466,7 @@ exports[`should parse simple_match.sepo 1`] = `
               {
                 "case": {
                   "type": "string",
-                  "value": "\\"Obtain\\"",
+                  "value": ""Obtain"",
                 },
                 "children": [
                   {
@@ -7476,7 +7476,7 @@ exports[`should parse simple_match.sepo 1`] = `
                           {
                             "child": {
                               "type": "string",
-                              "value": "\\"Obtained\\"",
+                              "value": ""Obtained"",
                             },
                             "type": "expression",
                           },

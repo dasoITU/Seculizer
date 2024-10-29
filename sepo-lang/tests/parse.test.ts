@@ -25,7 +25,7 @@ function createTest(file: string, relativePath: string) {
   it("should parse " + file, function () {
     const input = fs.readFileSync(path, "utf8").replace(/\r/g, ""); // Windows be like: nEwLIne iS \r\n
     if (!input) throw new Error("No input file found");
-    const ast = parse(input);
+    const ast = parse(input, false);
     expect(ast).toBeTruthy();
     expect(ast).toMatchSnapshot();
   });

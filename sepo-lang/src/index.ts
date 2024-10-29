@@ -1,3 +1,4 @@
+export { IToken } from "chevrotain";
 import { throwSimpleParseError } from "./parser/ParseError.js";
 import { SepoToAstVisitor } from "./parser/SepoVisitor.js";
 import { SepoLexer } from "./parser/lexer.js";

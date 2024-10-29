@@ -1,12 +1,11 @@
 <script lang="ts">
-
   /*
 Participants: a;
 Protocol: {
     a: k := f(x, y);
 };
 */
-  import { parse, ParseError, SepoLexer } from "$lang";
+  import { parse, ParseError, SepoLexer, type IToken } from "$lang";
   import { Program } from "$lib/models/program";
   import MagicString from "magic-string";
   import { onMount } from "svelte";
@@ -17,29 +16,10 @@ Protocol: {
   let { content = $bindable("") }: Props = $props();
   let hightlighted = $state(content);
   let loaded = $state(false);
-  type TokenType = {
-    name: string;
-    pattern: RegExp;
-    tokenTypeIdx: number;
-    CATEGORIES: string[];
-    categoryMatches: any[];
-    categoryMatchesMap: any;
-    isParent: boolean;
-  };
-  type Token = {
-    image: string;
-    startOffset: number;
-    endOffset: number;
-    startLine: number;
-    startColumn: number;
-    endColumn: number;
-    tokenTypeIdx: number;
-    tokenType: TokenType;
-  };
 
   $effect(() => {
     if (content !== "" && content) {
-      let tokens: Token[] = SepoLexer.tokenize(content + " eof").tokens;
+      let tokens: IToken[] = SepoLexer.tokenize(content + " eof").tokens;
       let tmp = new MagicString(content);
       let re = /(\r\n)|\n/g;
       let match;
@@ -173,7 +153,7 @@ Protocol: {
     bind:value={content}
     onscroll={updateScroll}
     onkeydown={handleKeyPress}
-></textarea>
+  ></textarea>
   <pre class="highlighter" aria-hidden="true" bind:this={preElement}><code>{@html hightlighted}</code></pre>
   <div id="darkInputContainer">
     <label for="darkinput" class="darkmode">
@@ -218,7 +198,7 @@ Protocol: {
     --ecolor-caret: white;
   }
 
-  .editor-container.loading{
+  .editor-container.loading {
     opacity: 0.9;
   }
   .editor-container {
@@ -408,7 +388,9 @@ Protocol: {
     cursor: pointer;
   }
   span.switchOption.active {
-    box-shadow: 0px 0px 3px 0px #757575, inset 0px 0px 3px 0px #757575;
+    box-shadow:
+      0px 0px 3px 0px #757575,
+      inset 0px 0px 3px 0px #757575;
     background: #ece9db;
   }
   span.switchOption.active .oma {
